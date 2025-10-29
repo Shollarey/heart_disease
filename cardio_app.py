@@ -43,8 +43,9 @@ def load_scaler():
 
 # Sidebars 
 def get_user_input():
-
-    st.sidebar.header("Patient Information")
+    st.sidebar.title("🩺 Patient Profile")
+    # st.sidebar.header("Patient Information")
+    st.sidebar.markdown("Provide the following details:")
 
     # Objective Measurements
     age_years = st.sidebar.number_input("Age (years)", min_value=1, max_value=120 , value=40)
@@ -105,8 +106,13 @@ def predict(model, features):
             return pred.tolist()
 
 def main():
-    st.set_page_config(page_title="Cardiovascular Disease Prediciton App", layout="wide")
-    st.title("❤️ Cardiovascular Disease Prediction App")
+    st.set_page_config(
+        page_title="Heart Disease Risk Predicitor ❤️",
+        page_icon="❤️", 
+        layout="wide",
+        initial_sidebar_state="expanded")
+    
+    st.title("❤️ Cardiovascular Disease Prediction")
     st.write("""
     This app predicts the likelihood of **cardiovascular disease** using a machine learning model trained in PyTorch.  
     Fill in the patient’s details on the sidebar and click **Predict** to see the result.
@@ -128,9 +134,9 @@ def main():
         pred = predict(model, features)
 
         if pred == 1:
-            st.error("🚨 The model predicts **Cardiovascular Disease is present.**")
+            st.error("🚨 **High Risk Detected!**\nConsult a healthcare provider for further evaluation.")
         else:
-            st.success("✅ The model predicts **No Cardiovascular Disease.**")
+            st.success("✅ **Low Risk**\nKeep maintaining a healthy lifestyle!")
     else:
         st.info("Please fill out the form and click **Predict** to see the result.")
 
@@ -162,6 +168,9 @@ def main():
     - **Deployment:** Streamlit  
     - **Author:** Olusola Aremu  
     """)
+
+    st.markdown("---")
+    st.caption("Built with ❤️ by Olusola Aremu using Streamlit and PyTorch.")
 
 
 if __name__ == "__main__":
